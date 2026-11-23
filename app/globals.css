@@ -1,26 +1,109 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Il tema scuro vale solo con la classe .dark, non con le preferenze di sistema */
+@custom-variant dark (&:is(.dark *));
+
+/* Colori Veeam (Brand Resource Center), usati per stati e grafici */
+@theme {
+  --color-viridis: #00d15f;
+  --color-mint: #32f26f;
+  --color-lime: #9cffa3;
+  --color-pine: #007f49;
+  --color-sol: #ffd839;
+  /* Sol scurito per i testi: il giallo pieno su bianco non si legge (contrasto 1,4:1, così circa 3:1) */
+  --color-sol-dark: #b89000;
+  --color-suma: #ff6900;
+  --color-ignis: #ed2b3d;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --font-sans: var(--font-text), system-ui, sans-serif;
+  --font-heading: var(--font-text), system-ui, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Tema shadcn con i colori Veeam */
+:root {
+  --background: #f3f5f4;
+  --foreground: #101312;
+  --card: #ffffff;
+  --card-foreground: #101312;
+  --popover: #ffffff;
+  --popover-foreground: #101312;
+  --primary: #007f49;
+  --primary-foreground: #ffffff;
+  --secondary: #eef1ef;
+  --secondary-foreground: #101312;
+  --muted: #f3f5f4;
+  --muted-foreground: #5a625f;
+  --accent: #e6f7ec;
+  --accent-foreground: #101312;
+  --destructive: #ed2b3d;
+  --border: #e1e5e3;
+  --input: #d3d8d5;
+  --ring: #00d15f;
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  [role="checkbox"]:not([aria-disabled="true"]),
+  [role="combobox"]:not([aria-disabled="true"]) {
+    cursor: pointer;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .avoid-break {
+    break-inside: avoid;
+  }
 }
